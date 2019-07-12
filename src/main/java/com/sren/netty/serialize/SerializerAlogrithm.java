@@ -5,5 +5,7 @@ package com.sren.netty.serialize;
  * @date: 2019/07/12 上午10:22
  * @Description:
  */
-public class SerializerAlogrithm {
+public interface SerializerAlogrithm {
+
+    byte JSON = 1;
 }

@@ -6,4 +6,5 @@ package com.sren.netty.protocol.command;
  * @Description:
  */
 public interface Command {
+    Byte LOGIN_REQUEST = 1;
 }
