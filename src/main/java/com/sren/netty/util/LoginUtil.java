@@ -1,8 +1,8 @@
-package the.flash.util;
+package com.sren.netty.util;
 
+import com.sren.netty.attribute.Attributes;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
-import the.flash.attribute.Attributes;
 
 public class LoginUtil {
     public static void markAsLogin(Channel channel) {

@@ -1,4 +1,4 @@
-package the.flash.attribute;
+package com.sren.netty.attribute;
 
 import io.netty.util.AttributeKey;
 

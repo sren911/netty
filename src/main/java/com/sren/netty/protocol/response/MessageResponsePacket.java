@@ -1,4 +1,4 @@
-package com.sren.netty.protocol.request;
+package com.sren.netty.protocol.response;
 
 import com.sren.netty.protocol.Packet;
 import com.sren.netty.protocol.command.Command;
@@ -11,12 +11,12 @@ import lombok.Data;
  */
 
 @Data
-public class MessageRequestPacket extends Packet {
+public class MessageResponsePacket extends Packet {
 
     private String message;
 
     @Override
     public Byte getCommand() {
-        return Command.MESSAGE_REQUEST;
+        return Command.MESSAGE_RESPONSE;
     }
 }

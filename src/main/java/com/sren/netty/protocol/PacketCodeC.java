@@ -1,7 +1,9 @@
 package com.sren.netty.protocol;
 
 import com.sren.netty.protocol.request.LoginRequestPacket;
+import com.sren.netty.protocol.request.MessageRequestPacket;
 import com.sren.netty.protocol.response.LoginResponsePacket;
+import com.sren.netty.protocol.response.MessageResponsePacket;
 import com.sren.netty.serialize.Serializer;
 import com.sren.netty.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -10,8 +12,7 @@ import io.netty.buffer.ByteBufAllocator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.sren.netty.protocol.command.Command.LOGIN_REQUEST;
-import static com.sren.netty.protocol.command.Command.LOGIN_RESPONSE;
+import static com.sren.netty.protocol.command.Command.*;
 
 /**
  * @author: renshuai
@@ -31,6 +32,8 @@ public class PacketCodeC {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

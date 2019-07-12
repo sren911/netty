@@ -1,12 +1,16 @@
 package com.sren.netty.client;
 
+import com.sren.netty.protocol.PacketCodeC;
+import com.sren.netty.protocol.request.MessageRequestPacket;
+import com.sren.netty.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+
+import java.util.Scanner;
 
 /**
  * @author: renshuai
@@ -35,9 +39,28 @@ public class NettyClient {
         b.connect(HOST, PORT).addListener(f->{
             if (f.isSuccess()) {
                 System.err.println("连接成功!");
+                Channel channel = ((ChannelFuture) f).channel();
+                startConsoleThread(channel);
             }else {
                 System.err.println("连接错误!");
             }
         });
+    }
+
+    private static void startConsoleThread(Channel channel) {
+        new Thread(()->{
+            while (!Thread.interrupted()) {
+                if (LoginUtil.hasLogin(channel)) {
+                    System.err.println("输入消息发送至服务端: ");
+                    Scanner sc = new Scanner(System.in);
+                    String line = sc.nextLine();
+
+                    MessageRequestPacket packet = new MessageRequestPacket();
+                    packet.setMessage(line);
+                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
+                    channel.writeAndFlush(byteBuf);
+                }
+            }
+        }).start();
     }
 }
