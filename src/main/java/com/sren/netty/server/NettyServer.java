@@ -7,7 +7,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * @author: renshuai
@@ -33,7 +32,7 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new FirstServerHandler());
+                            ch.pipeline().addLast(new ServerHandler());
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();

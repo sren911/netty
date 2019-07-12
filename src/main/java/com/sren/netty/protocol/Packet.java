@@ -1,4 +1,4 @@
-package com.sren.netty.protocol.command;
+package com.sren.netty.protocol;
 
 import lombok.Data;
 

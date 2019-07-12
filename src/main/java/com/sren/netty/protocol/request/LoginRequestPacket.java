@@ -1,5 +1,7 @@
-package com.sren.netty.protocol.command;
+package com.sren.netty.protocol.request;
 
+import com.sren.netty.protocol.command.Command;
+import com.sren.netty.protocol.Packet;
 import lombok.Data;
 
 /**
@@ -8,9 +10,9 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class LoginRequestPacket extends Packet{
+public class LoginRequestPacket extends Packet {
 
-    private Integer userId;
+    private String userId;
 
     private String username;
 
