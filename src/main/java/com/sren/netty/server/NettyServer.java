@@ -1,5 +1,9 @@
 package com.sren.netty.server;
 
+import com.sren.netty.codec.PacketDecoder;
+import com.sren.netty.codec.PacketEncoder;
+import com.sren.netty.server.handler.LoginRequestHandler;
+import com.sren.netty.server.handler.MessageRequestHandler;
 import com.sren.netty.server.inbound.InBoundHandlerA;
 import com.sren.netty.server.inbound.InBoundHandlerB;
 import com.sren.netty.server.inbound.InBoundHandlerC;
@@ -35,9 +39,10 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new InBoundHandlerA())
-                                    .addLast(new InBoundHandlerB())
-                                    .addLast(new InBoundHandlerC());
+                            ch.pipeline().addLast(new PacketDecoder())
+                                    .addLast(new LoginRequestHandler())
+                                    .addLast(new MessageRequestHandler())
+                                    .addLast(new PacketEncoder());
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();

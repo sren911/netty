@@ -1,5 +1,8 @@
 package com.sren.netty.client;
 
+import com.sren.netty.client.handler.LoginResponseHandler;
+import com.sren.netty.client.handler.MessageResponseHandler;
+import com.sren.netty.codec.PacketDecoder;
 import com.sren.netty.protocol.PacketCodeC;
 import com.sren.netty.protocol.request.MessageRequestPacket;
 import com.sren.netty.util.LoginUtil;
@@ -33,7 +36,9 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new CilentHandler());
+                        ch.pipeline().addLast(new PacketDecoder())
+                                        .addLast(new LoginResponseHandler())
+                        .addLast(new MessageResponseHandler()).addLast(new PacketDecoder());
                     }
                 });
         b.connect(HOST, PORT).addListener(f->{
