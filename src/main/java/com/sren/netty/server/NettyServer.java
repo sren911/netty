@@ -1,5 +1,8 @@
 package com.sren.netty.server;
 
+import com.sren.netty.server.inbound.InBoundHandlerA;
+import com.sren.netty.server.inbound.InBoundHandlerB;
+import com.sren.netty.server.inbound.InBoundHandlerC;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -32,7 +35,9 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ServerHandler());
+                            ch.pipeline().addLast(new InBoundHandlerA())
+                                    .addLast(new InBoundHandlerB())
+                                    .addLast(new InBoundHandlerC());
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();
